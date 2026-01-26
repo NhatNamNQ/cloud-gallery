@@ -33,6 +33,9 @@ export const VALIDATION = {
   FILE_TYPES: ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 }
 
+// Allowed image types for upload
+export const ALLOWED_IMAGE_TYPES = VALIDATION.FILE_TYPES
+
 // UI Configuration
 export const PAGINATION = {
   DEFAULT_PAGE_SIZE: 12,
