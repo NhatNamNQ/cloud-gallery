@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { usePhotoStore } from '../store'
 import { photoService } from '../services'
 import type { ApiError, Photo } from '../types'

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Button } from '../ui/button'
 import { Navigation } from './Navigation'
 interface HeaderProps {
@@ -11,15 +12,14 @@ interface HeaderProps {
  */
 export function Header({ isAuthenticated = false, onLogout }: HeaderProps) {
   return (
-    <header className='sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
+    <header className='sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60'>
       <div className='container mx-auto px-4'>
         <div className='flex h-16 items-center justify-between'>
           {/* Logo/Branding */}
           <div className='flex items-center gap-2'>
-            <a href='/' className='flex items-center gap-2'>
-              <span className='text-2xl'>☁️</span>
+            <Link to='/' className='flex items-center gap-2'>
               <span className='text-xl font-bold text-foreground'>Cloud Gallery</span>
-            </a>
+            </Link>
           </div>
 
           {/* Navigation */}
@@ -34,10 +34,10 @@ export function Header({ isAuthenticated = false, onLogout }: HeaderProps) {
             ) : (
               <>
                 <Button variant='ghost' size='sm' asChild>
-                  <a href='/auth'>Login</a>
+                  <Link to='/auth'>Login</Link>
                 </Button>
                 <Button size='sm' asChild>
-                  <a href='/auth'>Sign Up</a>
+                  <Link to='/auth'>Sign Up</Link>
                 </Button>
               </>
             )}
