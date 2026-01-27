@@ -1,8 +1,8 @@
 import { Download, Trash2, X, Calendar, User } from 'lucide-react'
 
-import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog'
 import type { Photo } from '../../types'
+import { Button } from '../ui/button'
 
 interface PhotoPreviewProps {
   photo: Photo | null
@@ -70,8 +70,8 @@ export function PhotoPreview({ photo, onClose, onDelete, isDeleting }: PhotoPrev
         {/* Actions */}
         <div className='flex items-center justify-between p-4 pt-0 border-t mt-4'>
           <div className='flex items-center gap-2'>
+            <Download className='h-4 w-4 mr-2' />
             <Button variant='outline' size='sm' onClick={handleDownload}>
-              <Download className='h-4 w-4 mr-2' />
               Download
             </Button>
             {onDelete && (

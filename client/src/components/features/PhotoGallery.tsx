@@ -3,9 +3,9 @@ import { ChevronLeft, ChevronRight, Images } from 'lucide-react'
 
 import { PhotoPreview } from './PhotoPreview'
 import { usePhotos } from '../../hooks'
-import { Button } from '../ui/button'
 import type { Photo } from '../../types'
 import PhotoCard, { PhotoCardSkeleton } from './PhotoCard'
+import { Button } from '../ui/button'
 
 interface PhotoGalleryProps {
   isLoading?: boolean
