@@ -82,77 +82,112 @@ export function PhotoGallery({ isLoading: externalLoading }: PhotoGalleryProps) 
   // Empty State
   if (photos.length === 0) {
     return (
-      <div className='flex flex-col items-center justify-center py-16 text-center'>
-        <div className='rounded-full bg-muted p-6 mb-4'>
-          <Images className='h-12 w-12 text-muted-foreground' />
+      <div className='flex flex-col items-center justify-center py-20 text-center'>
+        <div className='relative mb-8'>
+          {/* Decorative background */}
+          <div className='absolute inset-0 bg-linear-to-br from-blue-500/20 to-purple-600/20 rounded-full blur-3xl' />
+          {/* Icon container */}
+          <div className='relative rounded-full bg-linear-to-br from-blue-500/10 to-purple-600/10 p-8 border-2 border-dashed border-muted-foreground/20'>
+            <Images className='h-16 w-16 text-muted-foreground' />
+          </div>
         </div>
-        <h3 className='text-xl font-semibold mb-2'>No photos yet</h3>
-        <p className='text-muted-foreground max-w-sm'>Upload your first photo to get started with your gallery.</p>
+        <h3 className='text-2xl font-bold mb-3'>No photos yet</h3>
+        <p className='text-muted-foreground text-lg max-w-md mb-6'>
+          Start building your gallery by uploading your first photo. Your memories are waiting to be stored securely.
+        </p>
+        <div className='flex flex-wrap gap-3 justify-center text-sm text-muted-foreground'>
+          <div className='flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50'>
+            <span className='w-2 h-2 rounded-full bg-green-500' />
+            <span>Secure storage</span>
+          </div>
+          <div className='flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50'>
+            <span className='w-2 h-2 rounded-full bg-blue-500' />
+            <span>Fast uploads</span>
+          </div>
+          <div className='flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50'>
+            <span className='w-2 h-2 rounded-full bg-purple-500' />
+            <span>Easy sharing</span>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className='space-y-6'>
-      {/* Photo Grid */}
+    <div className='space-y-8'>
+      {/* Photo Grid with stagger animation */}
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
-        {paginatedPhotos.map((photo) => (
-          <PhotoCard
+        {paginatedPhotos.map((photo, index) => (
+          <div
             key={photo.id}
-            photo={photo}
-            onPreview={handlePreview}
-            onDelete={handleDelete}
-            isDeleting={deletingId === photo.id}
-          />
+            style={{
+              animation: `fadeInUp 0.5s ease-out ${index * 0.05}s both`
+            }}
+          >
+            <PhotoCard
+              photo={photo}
+              onPreview={handlePreview}
+              onDelete={handleDelete}
+              isDeleting={deletingId === photo.id}
+            />
+          </div>
         ))}
       </div>
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className='flex items-center justify-center gap-4 pt-4'>
-          <Button variant='outline' size='icon' onClick={prevPage} disabled={currentPage === 1}>
-            <ChevronLeft className='h-4 w-4' />
-          </Button>
+        <div className='flex flex-col items-center gap-4 pt-4'>
+          <div className='flex items-center gap-3'>
+            <Button variant='outline' size='icon' onClick={prevPage} disabled={currentPage === 1} className='h-10 w-10'>
+              <ChevronLeft className='h-4 w-4' />
+            </Button>
 
-          <div className='flex items-center gap-2'>
-            {Array.from({ length: totalPages }).map((_, index) => {
-              const page = index + 1
-              // Show limited page numbers
-              if (page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)) {
-                return (
-                  <Button
-                    key={page}
-                    variant={currentPage === page ? 'default' : 'outline'}
-                    size='sm'
-                    onClick={() => setCurrentPage(page)}
-                    className='min-w-10'
-                  >
-                    {page}
-                  </Button>
-                )
-              }
-              // Show ellipsis
-              if (page === currentPage - 2 || page === currentPage + 2) {
-                return (
-                  <span key={page} className='text-muted-foreground'>
-                    ...
-                  </span>
-                )
-              }
-              return null
-            })}
+            <div className='flex items-center gap-2'>
+              {Array.from({ length: totalPages }).map((_, index) => {
+                const page = index + 1
+                // Show limited page numbers
+                if (page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)) {
+                  return (
+                    <Button
+                      key={page}
+                      variant={currentPage === page ? 'default' : 'outline'}
+                      size='sm'
+                      onClick={() => setCurrentPage(page)}
+                      className='min-w-10 h-10'
+                    >
+                      {page}
+                    </Button>
+                  )
+                }
+                // Show ellipsis
+                if (page === currentPage - 2 || page === currentPage + 2) {
+                  return (
+                    <span key={page} className='text-muted-foreground px-2'>
+                      ...
+                    </span>
+                  )
+                }
+                return null
+              })}
+            </div>
+
+            <Button
+              variant='outline'
+              size='icon'
+              onClick={nextPage}
+              disabled={currentPage === totalPages}
+              className='h-10 w-10'
+            >
+              <ChevronRight className='h-4 w-4' />
+            </Button>
           </div>
 
-          <Button variant='outline' size='icon' onClick={nextPage} disabled={currentPage === totalPages}>
-            <ChevronRight className='h-4 w-4' />
-          </Button>
+          {/* Photo count */}
+          <div className='text-sm text-muted-foreground'>
+            Page {currentPage} of {totalPages} • {photos.length} photo{photos.length !== 1 ? 's' : ''} total
+          </div>
         </div>
       )}
-
-      {/* Photo count */}
-      <div className='text-center text-sm text-muted-foreground'>
-        Showing {paginatedPhotos.length} of {photos.length} photos
-      </div>
 
       {/* Preview Modal */}
       <PhotoPreview

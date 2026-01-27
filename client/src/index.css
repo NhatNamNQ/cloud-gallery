@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -120,4 +120,31 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Grid background pattern */
+.bg-grid-slate-100 {
+  background-image:
+    linear-gradient(to right, oklch(0.97 0 0 / 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.97 0 0 / 0.3) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .bg-grid-slate-800 {
+  background-image:
+    linear-gradient(to right, oklch(0.3 0 0 / 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.3 0 0 / 0.3) 1px, transparent 1px);
+  background-size: 24px 24px;
 }

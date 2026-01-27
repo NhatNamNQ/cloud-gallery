@@ -16,13 +16,14 @@ interface PhotoCardProps {
 /**
  * PhotoCard component
  * Displays a single photo with title, date, and action buttons
+ * Features improved hover effects and backdrop blur
  */
 export function PhotoCard({ photo, onPreview, onDelete, isDeleting }: PhotoCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
   return (
-    <Card className='group overflow-hidden transition-all hover:shadow-lg'>
+    <Card className='group overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1'>
       {/* Image Container */}
       <div className='relative aspect-square overflow-hidden bg-muted'>
         {/* Loading Skeleton */}
@@ -33,7 +34,7 @@ export function PhotoCard({ photo, onPreview, onDelete, isDeleting }: PhotoCardP
           <img
             src={photo.webUrl}
             alt={photo.title}
-            className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-105 ${
+            className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-110 ${
               imageLoaded ? 'opacity-100' : 'opacity-0'
             }`}
             onLoad={() => setImageLoaded(true)}
@@ -46,30 +47,39 @@ export function PhotoCard({ photo, onPreview, onDelete, isDeleting }: PhotoCardP
           </div>
         )}
 
-        {/* Hover Overlay */}
-        <div className='absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2'>
-          {onPreview && (
-            <Button variant='secondary' size='icon' onClick={() => onPreview(photo)} className='h-10 w-10'>
-              <Eye className='h-5 w-5' />
-            </Button>
-          )}
-          {onDelete && (
-            <Button
-              variant='destructive'
-              size='icon'
-              onClick={() => onDelete(photo.id)}
-              disabled={isDeleting}
-              className='h-10 w-10'
-            >
-              <Trash2 className='h-5 w-5' />
-            </Button>
-          )}
+        {/* Enhanced Hover Overlay with Backdrop Blur */}
+        <div className='absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-4'>
+          <div className='flex items-center gap-2 backdrop-blur-md bg-white/10 rounded-full px-3 py-2 border border-white/20'>
+            {onPreview && (
+              <Button
+                variant='ghost'
+                size='icon'
+                onClick={() => onPreview(photo)}
+                className='h-9 w-9 hover:bg-white/20 text-white'
+                title='Preview'
+              >
+                <Eye className='h-4 w-4' />
+              </Button>
+            )}
+            {onDelete && (
+              <Button
+                variant='ghost'
+                size='icon'
+                onClick={() => onDelete(photo.id)}
+                disabled={isDeleting}
+                className='h-9 w-9 hover:bg-red-500/80 text-white'
+                title='Delete'
+              >
+                <Trash2 className='h-4 w-4' />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Card Content */}
       <CardContent className='p-4 space-y-2'>
-        <h3 className='font-semibold text-lg truncate' title={photo.title}>
+        <h3 className='font-semibold text-lg truncate group-hover:text-primary transition-colors' title={photo.title}>
           {photo.title}
         </h3>
 

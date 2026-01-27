@@ -165,10 +165,14 @@ export function AuthForm({ mode }: AuthFormProps) {
           />
         )}
 
-        {/* Submit Button */}
-        <Button type='submit' className='w-full' disabled={isLoading}>
-          {isLoading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
-          {isLogin ? 'Sign In' : 'Create Account'}
+        {/* Submit Button - Prominent CTA with gradient */}
+        <Button
+          type='submit'
+          className='w-full h-12 text-base font-semibold bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300'
+          disabled={isLoading}
+        >
+          {isLoading && <Loader2 className='mr-2 h-5 w-5 animate-spin' />}
+          {isLogin ? 'Sign In to Your Account' : 'Create Your Free Account'}
         </Button>
       </form>
     </Form>

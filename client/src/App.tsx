@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
 
 import { Footer, Header } from './components/layout'
-import { HomePage } from './pages'
+import { HomePage, AuthPage } from './pages'
 import { useAuth } from './hooks'
 
 /**
@@ -29,7 +29,7 @@ function App() {
           <div className='container mx-auto px-4 py-8'>
             <Routes>
               <Route path='/' element={<HomePage />} />
-              <Route path='/auth/*' element={<div>Auth Page Placeholder</div>} />
+              <Route path='/auth/*' element={<AuthPage />} />
               {/* Additional routes to be added */}
             </Routes>
           </div>
