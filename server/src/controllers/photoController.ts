@@ -10,9 +10,11 @@ export const uploadPhoto = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const { title, userId } = req.body;
+    const { title } = req.body;
+    const userId = req.user?.userId;
+    
     if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
+      return res.status(401).json({ message: "Authentication required" });
     }
 
     const fileExtension = req.file.originalname.split(".").pop();
